@@ -8,5 +8,14 @@
 <manifest
     package="org.firstinspires.ftc.teamcode"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <application/>
+    <application>
+        <activity android:name=".config.ConfigurationActivity"
+            android:label="@string/action_config"
+            android:parentActivityName="org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity" />
+        </activity>
+    </application>
+
 </manifest>

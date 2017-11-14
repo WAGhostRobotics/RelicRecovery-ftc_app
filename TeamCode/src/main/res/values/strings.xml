@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_config">Configure Robot</string>
+
+    // Settings keys
+    <string name="pref_alliance_key" translatable="false">alliance-key</string>
+    <string name="pref_alliance_name">Alliance Color</string>
+    <string name="pref_pos_key" translatable="false">position-key</string>
+    <string name="pref_pos_name">Position</string>
 
 </resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="@string/pref_alliance_key"
+        android:title="@string/pref_alliance_name"
+        android:entries="@array/array_alliance_colors"
+        android:entryValues="@array/array_alliance_color_values"
+        android:summary="%s"
+        />
+
+    <ListPreference
+        android:key="@string/pref_pos_key"
+        android:title="@string/pref_pos_name"
+        android:entries="@array/array_position"
+        android:entryValues="@array/array_position_values"
+        android:summary="%s"
+        />
+</PreferenceScreen>
