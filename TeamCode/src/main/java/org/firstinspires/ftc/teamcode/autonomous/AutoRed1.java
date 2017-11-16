@@ -31,7 +31,7 @@ public class AutoRed1 extends LinearOpMode {
         robot.init(hardwareMap);
         preferences = PreferenceManager.getDefaultSharedPreferences(hardwareMap.appContext);
 
-        claw.initClaw();
+        claw.closeClaw();
         fondle.initFondler();
 
         telemetry.addData("Status: ", "Initialized");

@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.robot.RevbotHardware;
 import org.firstinspires.ftc.teamcode.robot.RevbotValues;
 
 /**
- * Created by josh on 11/12/17.
+ * Created by Josh on 11/12/17.
  */
 
 @Autonomous(name = "Claw", group = "Other")
@@ -24,11 +24,16 @@ public class Claw extends LinearOpMode {
         robot.init(hardwareMap);
     }
 
-    /***
-     * Initialize the claw to closed position.
-     */
-    public void initClaw() {
-        robot.clawRight.setPosition(RevbotValues.RIGHT_CLAW_CLOSED_VALUE);
-        robot.clawLeft.setPosition(RevbotValues.LEFT_CLAW_CLOSED_VALUE);
+    public void openClaw() {
+        setClawPos(RevbotValues.RIGHT_CLAW_OPENED_VALUE, RevbotValues.LEFT_CLAW_OPENED_VALUE);
+    }
+
+    public void closeClaw() {
+        setClawPos(RevbotValues.RIGHT_CLAW_CLOSED_VALUE, RevbotValues.LEFT_CLAW_CLOSED_VALUE);
+    }
+
+    public void setClawPos(double leftPos, double rightPos) {
+        robot.clawLeft.setPosition(leftPos);
+        robot.clawRight.setPosition(rightPos);
     }
 }
