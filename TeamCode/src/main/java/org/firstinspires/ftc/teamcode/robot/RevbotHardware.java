@@ -1,11 +1,18 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.preference.PreferenceManager;
+
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.settings.SettingsActivity;
 
 /**
  * Created by josh on 11/12/17.
@@ -16,8 +23,7 @@ public class RevbotHardware {
     public DcMotor leftDrive = null;
     public DcMotor rightDrive = null;
     public DcMotor strafe = null;
-    public DcMotor clawLower = null;
-    public DcMotor clawUpper = null;
+    public DcMotor cubeLift = null;
 
     public Servo clawRight = null;
     public Servo clawLeft = null;
@@ -28,6 +34,9 @@ public class RevbotHardware {
     public ElapsedTime elapsedTime = new ElapsedTime();
 
     HardwareMap hwMap = null;
+    public Resources res = null;
+    public Intent preferenceIntent = null;
+    public SharedPreferences preferences = null;
 
     public RevbotHardware() {
 
@@ -39,8 +48,7 @@ public class RevbotHardware {
         leftDrive = hwMap.get(DcMotor.class, "leftDrive");
         rightDrive = hwMap.get(DcMotor.class, "rightDrive");
         strafe = hwMap.get(DcMotor.class, "strafe");
-        clawLower = hwMap.get(DcMotor.class, "clawLower");
-        clawUpper = hwMap.get(DcMotor.class, "clawUpper");
+        cubeLift = hwMap.get(DcMotor.class, "cubeLift");
 
         clawRight = hwMap.get(Servo.class, "clawRight");
         clawLeft = hwMap.get(Servo.class, "clawLeft");
@@ -50,5 +58,11 @@ public class RevbotHardware {
 
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        strafe.setDirection(DcMotor.Direction.REVERSE);
+        cubeLift.setDirection(DcMotor.Direction.FORWARD);
+
+        res = hwMap.appContext.getResources();
+        preferenceIntent = new Intent(hwMap.appContext, SettingsActivity.class);
+        preferences = PreferenceManager.getDefaultSharedPreferences(hwMap.appContext);
     }
 }
