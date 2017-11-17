@@ -42,10 +42,12 @@ public class RevbotHardware {
 
     }
 
-    public void init(HardwareMap aHwMap) {
-        hwMap = aHwMap;
+    public void init(HardwareMap ahwMap) {
+        // Save reference to Hardware map
+        hwMap = ahwMap;
 
-        leftDrive = hwMap.get(DcMotor.class, "leftDrive");
+        // Define and Initialize Motors
+        leftDrive  = hwMap.get(DcMotor.class, "leftDrive");
         rightDrive = hwMap.get(DcMotor.class, "rightDrive");
         strafe = hwMap.get(DcMotor.class, "strafe");
         cubeLift = hwMap.get(DcMotor.class, "cubeLift");
@@ -58,7 +60,7 @@ public class RevbotHardware {
 
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
-        strafe.setDirection(DcMotor.Direction.REVERSE);
+        strafe.setDirection(DcMotor.Direction.FORWARD);
         cubeLift.setDirection(DcMotor.Direction.FORWARD);
 
         res = hwMap.appContext.getResources();

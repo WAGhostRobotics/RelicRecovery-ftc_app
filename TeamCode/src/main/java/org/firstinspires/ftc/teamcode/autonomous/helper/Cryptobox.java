@@ -14,10 +14,10 @@ import org.firstinspires.ftc.teamcode.robot.RevbotHardware;
 @Disabled
 public class Cryptobox extends LinearOpMode {
 
-    RevbotHardware robot = new RevbotHardware();
+    RevbotHardware robot;
 
-    public Cryptobox() {
-        robot.init(hardwareMap);
+    public Cryptobox(RevbotHardware aRobot) {
+        robot = aRobot;
     }
 
     @Override

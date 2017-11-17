@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.autonomous.helper;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.RevbotHardware;
 import org.firstinspires.ftc.teamcode.robot.RevbotValues;
@@ -13,24 +14,20 @@ import org.firstinspires.ftc.teamcode.robot.RevbotValues;
 
 @Autonomous(name = "Claw", group = "Other")
 @Disabled
-public class Claw extends LinearOpMode {
+public class Claw {
 
-    RevbotHardware robot = new RevbotHardware();
+    RevbotHardware robot;
 
-    public Claw() {
-        robot.init(hardwareMap);
-    }
-
-    @Override
-    public void runOpMode() throws InterruptedException {
+    public Claw(RevbotHardware aRobot) {
+        robot = aRobot;
     }
 
     public void openClaw() {
-        setClawPos(RevbotValues.RIGHT_CLAW_OPENED_VALUE, RevbotValues.LEFT_CLAW_OPENED_VALUE);
+        setClawPos(RevbotValues.LEFT_CLAW_CLOSED_VALUE, RevbotValues.RIGHT_CLAW_CLOSED_VALUE);
     }
 
     public void closeClaw() {
-        setClawPos(RevbotValues.RIGHT_CLAW_CLOSED_VALUE, RevbotValues.LEFT_CLAW_CLOSED_VALUE);
+        setClawPos(RevbotValues.LEFT_CLAW_CLOSED_VALUE, RevbotValues.RIGHT_CLAW_CLOSED_VALUE);
     }
 
     public void setClawPos(double leftPos, double rightPos) {

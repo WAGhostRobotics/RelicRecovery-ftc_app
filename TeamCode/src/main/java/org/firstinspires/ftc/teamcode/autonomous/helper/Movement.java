@@ -14,10 +14,10 @@ import org.firstinspires.ftc.teamcode.robot.RevbotHardware;
 @Disabled
 public class Movement extends LinearOpMode {
 
-    RevbotHardware robot = new RevbotHardware();
+    RevbotHardware robot;
 
-    public Movement() {
-        robot.init(hardwareMap);
+    public Movement(RevbotHardware aRobot) {
+        robot = aRobot;
     }
 
     @Override

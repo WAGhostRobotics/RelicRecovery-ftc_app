@@ -8,9 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.R;
-import org.firstinspires.ftc.teamcode.autonomous.helper.Claw;
-import org.firstinspires.ftc.teamcode.robot.RevbotHardware;
-import org.firstinspires.ftc.teamcode.robot.RevbotValues;
 
 /**
  * Created by 3565 on 10/20/2017.
@@ -38,11 +35,15 @@ import org.firstinspires.ftc.teamcode.robot.RevbotValues;
 @TeleOp(name="Drone Op", group="TeleOp")
 public class TeleopDroneOp extends LinearOpMode {
 
-    RevbotHardware robot = new RevbotHardware();
-    Claw claw = new Claw();
+    private DcMotor leftDrive;
+    private DcMotor rightDrive;
+    private DcMotor strafe;
+    private DcMotor cubeLift;
+    private Servo claw1;
+    private Servo claw2;
 
-    public double rightPower;
     public double leftPower;
+    public double rightPower;
     public double strafePower;
     public double turnPower;
     public double hyperPrecision;
@@ -56,7 +57,13 @@ public class TeleopDroneOp extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-                directSave[0] = 0;
+        leftDrive = hardwareMap.get(DcMotor.class, "leftDrive");
+        rightDrive = hardwareMap.get(DcMotor.class, "rightDrive");
+        strafe = hardwareMap.get(DcMotor.class, "strafe");
+        cubeLift = hardwareMap.get(DcMotor.class, "cubeLift");
+        claw1 = hardwareMap.get(Servo.class, "clawRight");
+        claw2 = hardwareMap.get(Servo.class, "clawLeft");
+        directSave[0] = 0;
         directSave[1] = 0;
         directSave[2] = 0;
 
@@ -89,65 +96,67 @@ public class TeleopDroneOp extends LinearOpMode {
             //Tests to see if directSave is on. If so, use saved movement.
 
             if(gamepad1.right_trigger > 0.1){
-                robot.leftDrive.setPower(directSave[0] * gamepad1.right_trigger);
-                robot.rightDrive.setPower(directSave[1] * gamepad1.right_trigger);
-                robot.strafe.setPower(directSave[2] * gamepad1.right_trigger);
+                leftDrive.setPower(directSave[0] * gamepad1.right_trigger);
+                rightDrive.setPower(directSave[1] * gamepad1.right_trigger);
+                strafe.setPower(directSave[2] * gamepad1.right_trigger);
             }else{
 
-               if (!smartDirect || (smartDirect && Math.abs(gamepad1.left_stick_y) >= Math.abs(gamepad1.left_stick_x))){
+                if (!smartDirect || (smartDirect && Math.abs(gamepad1.left_stick_y) >= Math.abs(gamepad1.left_stick_x))){
 
-                 robot.leftDrive.setPower(leftPower);
-                 robot.rightDrive.setPower(rightPower);
+                    leftDrive.setPower(leftPower);
+                    rightDrive.setPower(rightPower);
 
-                   if(smartDirect && Math.abs(gamepad1.left_stick_y) >= Math.abs(gamepad1.left_stick_x)){
-                       robot.strafe.setPower(0);
-                   }
-
-              }
-
-               if (!smartDirect || (smartDirect && Math.abs(gamepad1.left_stick_y) < Math.abs(gamepad1.left_stick_x))){
-
-                 robot.strafe.setPower(-strafePower);
-
-                   if(smartDirect && Math.abs(gamepad1.left_stick_y) < Math.abs(gamepad1.left_stick_x)){
-                       robot.leftDrive.setPower(0);
-                       robot.rightDrive.setPower(0);
-                   }
+                    if(smartDirect && Math.abs(gamepad1.left_stick_y) >= Math.abs(gamepad1.left_stick_x)){
+                        strafe.setPower(0);
+                    }
 
                 }
 
-               if(gamepad1.right_bumper){
+                if (!smartDirect || (smartDirect && Math.abs(gamepad1.left_stick_y) < Math.abs(gamepad1.left_stick_x))){
 
-                    directSave[0] = robot.leftDrive.getPower();
-                    directSave[1] = robot.rightDrive.getPower();
-                    directSave[2] = robot.strafe.getPower();
+                    strafe.setPower(-strafePower);
 
-               }
+                    if(smartDirect && Math.abs(gamepad1.left_stick_y) < Math.abs(gamepad1.left_stick_x)){
+                        leftDrive.setPower(0);
+                        rightDrive.setPower(0);
+                    }
+
+                }
+
+                if(gamepad1.right_bumper){
+
+                    directSave[0] = leftDrive.getPower();
+                    directSave[1] = rightDrive.getPower();
+                    directSave[2] = strafe.getPower();
+
+                }
             }
             if(gamepad1.dpad_up) {
-                robot.cubeLift.setPower(-1.0);
+                cubeLift.setPower(-1.0);
                 up.start();
             }
             else if(gamepad1.dpad_down) {
-                robot.cubeLift.setPower(0.5);
+                cubeLift.setPower(0.5);
                 down.start();
             }
             else {
-                robot.cubeLift.setPower(0.0);
+                cubeLift.setPower(0.0);
                 up.stop();
                 down.stop();
             }
 
             if(gamepad1.dpad_left){
-                robot.clawLeft.setPosition(RevbotValues.LEFT_CLAW_CLOSED_VALUE);
-                robot.clawRight.setPosition(RevbotValues.RIGHT_CLAW_CLOSED_VALUE);
+                claw1.setPosition(0.2);
+                claw2.setPosition(0.8);
             }
-            if(gamepad1.dpad_right) {
-                robot.clawLeft.setPosition(RevbotValues.LEFT_CLAW_OPENED_VALUE);
-                robot.clawRight.setPosition(RevbotValues.RIGHT_CLAW_OPENED_VALUE);
+            if(gamepad1.dpad_right){
+
+                claw1.setPosition(0.8);
+                claw2.setPosition(0.2);
+
             }
 
-            telemetry.addData("Status", "Running \nServoPosition: " + robot.clawRight.getPosition());
+            telemetry.addData("Status", "Running \nServoPosition: " + claw1.getPosition());
             telemetry.update();
 
 

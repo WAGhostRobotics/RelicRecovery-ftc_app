@@ -17,10 +17,10 @@ import org.firstinspires.ftc.teamcode.robot.RevbotValues;
 @Disabled
 public class BallFondle extends LinearOpMode {
 
-    RevbotHardware robot = new RevbotHardware();
+    RevbotHardware robot;
 
-    public BallFondle() {
-        robot.init(hardwareMap);
+    public BallFondle(RevbotHardware aRobot) {
+        robot = aRobot;
     }
 
     @Override
@@ -48,9 +48,9 @@ public class BallFondle extends LinearOpMode {
      */
     public void fondleBalls(String teamColor) {
 
-        if ((teamColor.equals("BLUE") && isBlue()) || (teamColor.equals("RED") && isRed())) {
+        if ((teamColor.equals("blue") && isBlue()) || (teamColor.equals("red") && isRed())) {
             robot.fondler.setPosition(RevbotValues.FONDLER_RIGHT_VALUE);
-        } else if ((teamColor.equals("BLUE") && isRed()) || (teamColor.equals("RED") && isBlue())) {
+        } else if ((teamColor.equals("blue") && isRed()) || (teamColor.equals("red") && isBlue())) {
             robot.fondler.setPosition(RevbotValues.FONDLER_LEFT_VALUE);
         }
 

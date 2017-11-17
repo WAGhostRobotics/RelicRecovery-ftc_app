@@ -14,10 +14,10 @@ import org.firstinspires.ftc.teamcode.robot.RevbotHardware;
 @Disabled
 public class Vuforia extends LinearOpMode {
 
-    RevbotHardware robot = new RevbotHardware();
+    RevbotHardware robot;
 
-    public Vuforia() {
-        robot.init(hardwareMap);
+    public Vuforia(RevbotHardware aRobot) {
+        robot = aRobot;
     }
 
     @Override

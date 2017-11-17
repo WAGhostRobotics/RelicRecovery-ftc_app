@@ -25,9 +25,10 @@ import org.firstinspires.ftc.teamcode.settings.SettingsActivity;
 public class AutoRed1 extends LinearOpMode {
 
     RevbotHardware robot = new RevbotHardware();
-    Claw claw = new Claw();
-    Movement movement = new Movement();
-    BallFondle fondle = new BallFondle();
+
+    Claw claw = new Claw(robot);
+    Movement movement = new Movement(robot);
+    BallFondle fondle = new BallFondle(robot);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -42,11 +43,11 @@ public class AutoRed1 extends LinearOpMode {
         telemetry.addData("Status: ", "Initialized");
         waitForStart();
 
-        movement.strafeLeft(1, 1);
+        movement.strafeLeft(0.5, 1);
 
         fondle.fondleBalls(robot.preferences.getString(robot.res.getString(R.string.pref_alliance_key), "red"));
 
-        movement.strafeLeft(1,1);
+        movement.strafeRight(0.5,1);
 
         movement.backward(4, 1);
     }
