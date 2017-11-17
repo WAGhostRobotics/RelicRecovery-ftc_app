@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.R;
 import org.firstinspires.ftc.teamcode.autonomous.helper.Claw;
 import org.firstinspires.ftc.teamcode.robot.RevbotHardware;
+import org.firstinspires.ftc.teamcode.robot.RevbotValues;
 
 /**
  * Created by 3565 on 10/20/2017.
@@ -138,10 +139,12 @@ public class TeleopDroneOp extends LinearOpMode {
             }
 
             if(gamepad1.dpad_left){
-                claw.closeClaw();
+                robot.clawLeft.setPosition(RevbotValues.LEFT_CLAW_CLOSED_VALUE);
+                robot.clawRight.setPosition(RevbotValues.RIGHT_CLAW_CLOSED_VALUE);
             }
             if(gamepad1.dpad_right) {
-                claw.openClaw();
+                robot.clawLeft.setPosition(RevbotValues.LEFT_CLAW_OPENED_VALUE);
+                robot.clawRight.setPosition(RevbotValues.RIGHT_CLAW_OPENED_VALUE);
             }
 
             telemetry.addData("Status", "Running \nServoPosition: " + robot.clawRight.getPosition());

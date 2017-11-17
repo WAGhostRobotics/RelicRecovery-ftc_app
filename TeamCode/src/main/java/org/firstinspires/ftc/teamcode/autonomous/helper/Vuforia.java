@@ -16,11 +16,12 @@ public class Vuforia extends LinearOpMode {
 
     RevbotHardware robot = new RevbotHardware();
 
-    public Vuforia() {}
+    public Vuforia() {
+        robot.init(hardwareMap);
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
     }
 
     // This class includes methods relating to Vuforia

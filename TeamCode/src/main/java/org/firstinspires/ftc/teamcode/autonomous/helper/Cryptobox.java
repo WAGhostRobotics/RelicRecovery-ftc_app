@@ -16,11 +16,12 @@ public class Cryptobox extends LinearOpMode {
 
     RevbotHardware robot = new RevbotHardware();
 
-    public Cryptobox() {}
+    public Cryptobox() {
+        robot.init(hardwareMap);
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
     }
 
 }

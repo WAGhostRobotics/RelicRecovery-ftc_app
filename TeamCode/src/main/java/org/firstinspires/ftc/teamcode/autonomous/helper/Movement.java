@@ -16,11 +16,12 @@ public class Movement extends LinearOpMode {
 
     RevbotHardware robot = new RevbotHardware();
 
-    public Movement() {}
+    public Movement() {
+        robot.init(hardwareMap);
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
     }
 
     /***

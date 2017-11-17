@@ -19,11 +19,12 @@ public class BallFondle extends LinearOpMode {
 
     RevbotHardware robot = new RevbotHardware();
 
-    public BallFondle() {}
+    public BallFondle() {
+        robot.init(hardwareMap);
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
     }
 
     /***

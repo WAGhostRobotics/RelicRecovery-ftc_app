@@ -17,11 +17,12 @@ public class Claw extends LinearOpMode {
 
     RevbotHardware robot = new RevbotHardware();
 
-    public Claw() {}
+    public Claw() {
+        robot.init(hardwareMap);
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
     }
 
     public void openClaw() {
