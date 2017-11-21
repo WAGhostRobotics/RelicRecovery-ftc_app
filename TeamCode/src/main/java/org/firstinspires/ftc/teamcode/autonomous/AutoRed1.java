@@ -26,26 +26,26 @@ public class AutoRed1 extends LinearOpMode {
 
     RevbotHardware robot = new RevbotHardware();
 
-    Claw claw = new Claw(robot);
-    Movement movement = new Movement(robot);
-    BallFondle fondle = new BallFondle(robot);
+    Claw claw = new Claw();
+    Movement movement = new Movement();
+    BallFondle fondle = new BallFondle();
 
     @Override
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
-        robot.preferences = PreferenceManager.getDefaultSharedPreferences(hardwareMap.appContext);
+        claw.runOpMode();
+        movement.runOpMode();
+        fondle.runOpMode();
 
         claw.closeClaw();
         fondle.initFondler();
-
-        hardwareMap.appContext.startActivity(robot.preferenceIntent);
 
         telemetry.addData("Status: ", "Initialized");
         waitForStart();
 
         movement.strafeLeft(0.5, 1);
 
-        fondle.fondleBalls(robot.preferences.getString(robot.res.getString(R.string.pref_alliance_key), "red"));
+        fondle.fondleBalls("red");
 
         movement.strafeRight(0.5,1);
 

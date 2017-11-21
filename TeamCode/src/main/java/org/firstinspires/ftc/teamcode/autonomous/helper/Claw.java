@@ -14,12 +14,15 @@ import org.firstinspires.ftc.teamcode.robot.RevbotValues;
 
 @Autonomous(name = "Claw", group = "Other")
 @Disabled
-public class Claw {
+public class Claw extends LinearOpMode {
 
     RevbotHardware robot;
 
-    public Claw(RevbotHardware aRobot) {
-        robot = aRobot;
+    public Claw() {}
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+        robot.init(hardwareMap);
     }
 
     public void openClaw() {

@@ -50,9 +50,6 @@ public class TeleopDroneOp extends LinearOpMode {
     public boolean smartDirect;
     public double[] directSave = new double[3];
 
-    MediaPlayer up;
-    MediaPlayer down;
-
     public final double HP_STRENGTH=4;
 
     @Override
@@ -66,9 +63,6 @@ public class TeleopDroneOp extends LinearOpMode {
         directSave[0] = 0;
         directSave[1] = 0;
         directSave[2] = 0;
-
-        up = MediaPlayer.create(hardwareMap.appContext, R.raw.slideup);
-        down = MediaPlayer.create(hardwareMap.appContext, R.raw.slidedown);
 
         telemetry.addData("Status:", "Initialized");
         telemetry.update();
@@ -133,16 +127,12 @@ public class TeleopDroneOp extends LinearOpMode {
             }
             if(gamepad1.dpad_up) {
                 cubeLift.setPower(-1.0);
-                up.start();
             }
             else if(gamepad1.dpad_down) {
                 cubeLift.setPower(0.5);
-                down.start();
             }
             else {
                 cubeLift.setPower(0.0);
-                up.stop();
-                down.stop();
             }
 
             if(gamepad1.dpad_left){
