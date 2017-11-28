@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.R;
+import org.firstinspires.ftc.teamcode.autonomous.helper.Claw;
+import org.firstinspires.ftc.teamcode.robot.RevbotHardware;
 
 /**
  * Created by 3565 on 10/20/2017.
@@ -35,13 +37,9 @@ import org.firstinspires.ftc.teamcode.R;
 @TeleOp(name="Drone Op", group="TeleOp")
 public class TeleopDroneOp extends LinearOpMode {
 
-    private DcMotor leftDrive;
-    private DcMotor rightDrive;
-    private DcMotor strafe;
-    private DcMotor cubeLift;
-    private Servo claw1;
-    private Servo claw2;
-
+    RevbotHardware robot = new RevbotHardware();
+    Claw claw = new Claw();
+    
     public double leftPower;
     public double rightPower;
     public double strafePower;
@@ -54,12 +52,9 @@ public class TeleopDroneOp extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        leftDrive = hardwareMap.get(DcMotor.class, "leftDrive");
-        rightDrive = hardwareMap.get(DcMotor.class, "rightDrive");
-        strafe = hardwareMap.get(DcMotor.class, "strafe");
-        cubeLift = hardwareMap.get(DcMotor.class, "cubeLift");
-        claw1 = hardwareMap.get(Servo.class, "clawRight");
-        claw2 = hardwareMap.get(Servo.class, "clawLeft");
+        robot.init(hardwareMap);
+        claw.runOpMode();
+        
         directSave[0] = 0;
         directSave[1] = 0;
         directSave[2] = 0;
@@ -90,63 +85,60 @@ public class TeleopDroneOp extends LinearOpMode {
             //Tests to see if directSave is on. If so, use saved movement.
 
             if(gamepad1.right_trigger > 0.1){
-                leftDrive.setPower(directSave[0] * gamepad1.right_trigger);
-                rightDrive.setPower(directSave[1] * gamepad1.right_trigger);
-                strafe.setPower(directSave[2] * gamepad1.right_trigger);
+                robot.leftDrive.setPower(directSave[0] * gamepad1.right_trigger);
+                robot.rightDrive.setPower(directSave[1] * gamepad1.right_trigger);
+                robot.strafe.setPower(directSave[2] * gamepad1.right_trigger);
             }else{
 
                 if (!smartDirect || (smartDirect && Math.abs(gamepad1.left_stick_y) >= Math.abs(gamepad1.left_stick_x))){
 
-                    leftDrive.setPower(leftPower);
-                    rightDrive.setPower(rightPower);
+                    robot.leftDrive.setPower(leftPower);
+                    robot.rightDrive.setPower(rightPower);
 
                     if(smartDirect && Math.abs(gamepad1.left_stick_y) >= Math.abs(gamepad1.left_stick_x)){
-                        strafe.setPower(0);
+                        robot.strafe.setPower(0);
                     }
 
                 }
 
                 if (!smartDirect || (smartDirect && Math.abs(gamepad1.left_stick_y) < Math.abs(gamepad1.left_stick_x))){
 
-                    strafe.setPower(-strafePower);
+                    robot.strafe.setPower(-strafePower);
 
                     if(smartDirect && Math.abs(gamepad1.left_stick_y) < Math.abs(gamepad1.left_stick_x)){
-                        leftDrive.setPower(0);
-                        rightDrive.setPower(0);
+                        robot.leftDrive.setPower(0);
+                        robot.rightDrive.setPower(0);
                     }
 
                 }
 
                 if(gamepad1.right_bumper){
 
-                    directSave[0] = leftDrive.getPower();
-                    directSave[1] = rightDrive.getPower();
-                    directSave[2] = strafe.getPower();
+                    directSave[0] = robot.leftDrive.getPower();
+                    directSave[1] = robot.rightDrive.getPower();
+                    directSave[2] = robot.strafe.getPower();
 
                 }
             }
             if(gamepad1.dpad_up) {
-                cubeLift.setPower(-1.0);
+                robot.cubeLift.setPower(-1.0);
             }
             else if(gamepad1.dpad_down) {
-                cubeLift.setPower(0.5);
+                robot.cubeLift.setPower(0.5);
             }
             else {
-                cubeLift.setPower(0.0);
+                robot.cubeLift.setPower(0.0);
             }
 
             if(gamepad1.dpad_left){
-                claw1.setPosition(0.2);
-                claw2.setPosition(0.8);
+                claw.closeClaw();
             }
             if(gamepad1.dpad_right){
-
-                claw1.setPosition(0.8);
-                claw2.setPosition(0.2);
-
+                claw.openClaw();
             }
 
-            telemetry.addData("Status", "Running \nServoPosition: " + claw1.getPosition());
+            telemetry.addData("Status", "Running");
+            telemetry.addData("ServoPosition", robot.clawRight.getPosition());
             telemetry.update();
 
 
